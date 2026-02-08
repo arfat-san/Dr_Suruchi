@@ -1,0 +1,1420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navigation Bar</title>
+    <!-- Google Fonts - Oswald -->
+    <link href="https://fonts.googleapis.com/css2?family=Merienda:wght@400&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Global scrollbar cleanup */
+        html {
+            overflow-x: hidden;
+        }
+
+        /* Utility class to remove inner scrollbars */
+        .no-inner-scroll {
+            overflow: visible;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .no-inner-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Ensure content doesn't cause horizontal overflow */
+        * {
+            box-sizing: border-box;
+        }
+
+        /* Show hamburger on all screen sizes below 1200px */
+        .ipad-hamburger {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            position: relative !important;
+            z-index: 10 !important;
+        }
+
+        /* Hide hamburger only on large desktop screens */
+        @media screen and (min-width: 1401px) {
+            .ipad-hamburger {
+                display: none !important;
+                visibility: hidden !important;
+            }
+        }
+
+        /* Dental Solutions Cards - iPad Layout */
+        @media screen and (min-width: 768px) and (max-width: 1400px) {
+            /* Stack all cards vertically in a single column */
+            .services-cards {
+                flex-direction: column !important;
+                align-items: center !important;
+            }
+
+            /* Increase card widths on iPad */
+            .services-cards .flex.flex-col {
+                width: 100% !important;
+                max-width: 600px !important;
+            }
+
+            /* Make individual cards wider on iPad */
+            #cosmetic-card,
+            #root-canal-card,
+            #braces-card,
+            #implants-card,
+            #pediatric-card,
+            #smile-makeover-card {
+                width: 100% !important;
+                max-width: 600px !important;
+            }
+        }
+
+        /* iPad Navbar Fix - Use hamburger menu on iPad and fix Dr. Suruchi section layout */
+        @media screen and (min-width: 768px) and (max-width: 1400px) {
+            /* Comprehensive dental solutions section heading */
+            section[class*="w-full overflow-x-hidden"] h2 {
+                font-size: 4rem !important;
+                line-height: 1.3 !important;
+            }
+
+            /* Smile gallery section heading */
+            .gallery-title {
+                font-size: 4rem !important;
+                line-height: 1.3 !important;
+            }
+
+            /* Patient stories section heading */
+            section[class*="py-32"] h2 {
+                font-size: 4rem !important;
+                line-height: 1.3 !important;
+            }
+
+            /* Our clinic section heading */
+            section[class*="bg-white py-20"]:not([class*="bg-black"]) h2 {
+                font-size: 4rem !important;
+                line-height: 1.3 !important;
+            }
+
+            /* Book appointment section heading */
+            section[class*="bg-black py-24"] h2 {
+                font-size: 4rem !important;
+                line-height: 1.3 !important;
+            }
+
+            /* Section sub texts - individual rules for iPad consistency */
+            .gallery-description {
+                font-size: 1.7rem !important;
+                line-height: 1.4 !important;
+            }
+
+            /* Fix vertical alignment of smile gallery title and description on iPad */
+            .gallery-text-container {
+                display: flex !important;
+                flex-direction: column !important;
+                justify-content: flex-start !important;
+                align-items: baseline !important; /* Changed from flex-start to baseline for better alignment */
+            }
+
+            .gallery-title {
+                margin-bottom: 0 !important;
+                display: inline-block !important;
+                vertical-align: baseline !important;
+            }
+
+            .gallery-description {
+                margin-top: 0.5rem !important;
+                display: inline-block !important;
+                vertical-align: baseline !important;
+            }
+
+            /* Dr. Suruchi paragraph - increased size for iPad */
+            section[class*="bg-white py-20"]:not([class*="bg-black"]) p {
+                font-size: 2.2rem !important;
+                line-height: 1.5 !important;
+            }
+
+            /* Dental solutions paragraph */
+            section[class*="w-full overflow-x-hidden"] p {
+                font-size: 1.7rem !important;
+                line-height: 1.4 !important;
+            }
+
+            /* Patient stories paragraph */
+            section[class*="py-32"] p {
+                font-size: 1.7rem !important;
+                line-height: 1.4 !important;
+            }
+
+            /* Book appointment paragraph */
+            section[class*="bg-black py-24"] p[class*="text-lg lg:text-xl"] {
+                font-size: 1.7rem !important;
+                line-height: 1.4 !important;
+            }
+
+            /* Dr. Suruchi section spans and buttons */
+            section[class*="bg-white py-20"]:not([class*="bg-black"]) span {
+                font-size: 1.7rem !important;
+                line-height: 1.4 !important;
+            }
+
+            section[class*="bg-white py-20"]:not([class*="bg-black"]) button {
+                font-size: 1.7rem !important;
+                line-height: 1.4 !important;
+            }
+
+            /* Dr. Suruchi section left alignment for iPad */
+            /* Left align the heading and increase its size further */
+            section[class*="bg-white py-20"]:not([class*="bg-black"]) h2 {
+                text-align: left !important;
+                font-size: 5rem !important;
+            }
+
+            /* Left align the description paragraph */
+            section[class*="bg-white py-20"]:not([class*="bg-black"]) .order-1 p {
+                text-align: left !important;
+            }
+
+            /* FORCE HORIZONTAL LINE: Board certified, Advanced training, Patient focused */
+            section[class*="bg-white py-20"]:not([class*="bg-black"]) .space-y-4 {
+                display: flex !important;
+                flex-direction: row !important;
+                flex-wrap: nowrap !important;
+                gap: 1rem !important;
+                justify-content: flex-start !important;
+                align-items: center !important;
+                height: auto !important;
+            }
+
+            /* Force each credential item to stay inline */
+            section[class*="bg-white py-20"]:not([class*="bg-black"]) .space-y-4 > div {
+                flex: none !important;
+                display: inline-flex !important;
+                align-items: center !important;
+                white-space: nowrap !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+
+            /* Ensure children can't wrap */
+            section[class*="bg-white py-20"]:not([class*="bg-black"]) div[class*="space-y-4"] div[class*="flex"] {
+                flex-wrap: nowrap !important;
+                word-break: keep-all !important;
+            }
+
+            /* Fix iPad text wrapping for certificate/training/patient focus spans */
+            section[class*="bg-white py-20"]:not([class*="bg-black"]) .space-y-4 .flex span {
+                white-space: nowrap !important;
+                flex-shrink: 0 !important;
+                display: inline-block !important;
+                overflow: visible !important;
+                word-break: keep-all !important;
+                hyphens: none !important;
+            }
+
+            /* Prevent flex container wrapping on iPad */
+            section[class*="bg-white py-20"]:not([class*="bg-black"]) .space-y-4 .flex {
+                flex-wrap: nowrap !important;
+                display: flex !important;
+                align-items: center !important;
+            }
+
+            /* Left align the Learn/Contact buttons container */
+            section[class*="bg-white py-20"]:not([class*="bg-black"]) .flex.space-x-4 {
+                justify-content: flex-start;
+            }
+
+            /* Resize Dr. Suruchi image on iPad */
+            section[class*="bg-white py-20"]:not([class*="bg-black"]) img[alt*="Dr. Suruchi"] {
+                width: 150% !important;
+                height: auto !important;
+                max-width: 100% !important;
+                padding-top: 2rem !important;
+            }
+
+            /* Change Dr. Suruchi section layout for iPad - image below text */
+            section[class*="bg-white py-20"]:not([class*="bg-black"]) .grid.lg\:grid-cols-2.items-center {
+                grid-template-columns: 1fr !important;
+                gap: 2rem !important;
+            }
+
+            /* Text content first */
+            section[class*="bg-white py-20"]:not([class*="bg-black"]) .order-1 {
+                order: 1 !important;
+            }
+
+            /* Image below text */
+            section[class*="bg-white py-20"]:not([class*="bg-black"]) .order-2 {
+                order: 2 !important;
+            }
+
+            /* Left align Dr. Suruchi description paragraph specifically */
+            section[class*="bg-white py-20"]:not([class*="bg-black"]) .text-gray-700.mb-8.leading-relaxed {
+                text-align: left !important;
+                margin-left: 0 !important;
+                margin-right: 0 !important;
+            }
+
+            /* Remove left margins from Dr. Suruchi section containers */
+            section[class*="bg-white py-20"]:not([class*="bg-black"]) .max-w-6xl.mx-auto {
+                margin-left: 0 !important;
+                margin-right: 0 !important;
+            }
+
+            /* Remove left padding from Dr. Suruchi section containers */
+            section[class*="bg-white py-20"]:not([class*="bg-black"]) .max-w-6xl.mx-auto .px-6.lg\:px-8 {
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+            }
+            /* Hide navigation links on iPad */
+            .ipad-nav-links {
+                display: none !important;
+            }
+
+            /* Show hamburger menu on iPad and position it on the left - same size as mobile */
+            .ipad-hamburger {
+                display: block !important;
+                visibility: visible !important;
+                position: relative !important;
+                z-index: 10 !important;
+                width: 36px !important;
+                height: 36px !important;
+                padding: 8px !important;
+            }
+
+            .ipad-hamburger svg {
+                width: 20px !important;
+                height: 20px !important;
+            }
+
+            /* Hide book button on iPad */
+            .ipad-book-btn {
+                display: none !important;
+            }
+
+            /* Adjust navbar layout for iPad */
+            nav .flex.items-center.space-x-4.md\:space-x-8 {
+                justify-content: flex-start;
+            }
+
+            /* Proper iPad navbar layout: Home/Services/About (left), Logo (center), Book Appointment (right) */
+            nav {
+                display: flex !important;
+                justify-content: space-between !important;
+                align-items: center !important;
+            }
+
+            /* Left navigation: order 1 */
+            nav > .flex.items-center.space-x-4.md\:space-x-8 {
+                order: 1 !important;
+                flex-shrink: 0 !important;
+                margin-right: auto !important;
+            }
+
+            /* Logo container: order 2 */
+            nav .logo-container {
+                order: 2 !important;
+                flex: 0 0 auto !important;
+                margin: 0 auto !important;
+                position: absolute !important;
+                left: 50% !important;
+                transform: translateX(-50%) !important;
+            }
+
+            /* Right button container: explicitly target the Book Appointment button wrapper */
+            nav > div[class*="flex items-center space-x-4"]:not(.logo-container) {
+                order: 3 !important;
+                flex-shrink: 0 !important;
+                margin-left: auto !important;
+            }
+
+            /* Reduce hero image size on iPad */
+            section[class*="pt-6 pb-10"] img[class*="md:w-full"] {
+                height: 70vh !important; /* Reduced from 100vh to 70vh on iPad */
+                max-width: 800px !important; /* Limited max width to make it smaller */
+            }
+
+            /* Remove padding from hero section on iPad */
+            .ipad-px-12 {
+                padding-left: 0rem !important;
+                padding-right: 0rem !important;
+            }
+
+            /* Increase font size for "Smile with confidence" on iPad */
+            section[class*="pt-6 pb-10"] h1 {
+                font-size: 4rem !important; /* Increased from text-3xl (30px) to 4rem (64px) */
+                line-height: 1.2 !important;
+                white-space: nowrap !important; /* Prevent text wrapping */
+                word-break: keep-all !important; /* Keep words together */
+                margin-bottom: 2rem !important; /* Increased vertical spacing between heading and subheading on iPad */
+                top: 38% !important;
+            }
+
+            /* Increase font size for subtitle on iPad */
+            section[class*="pt-6 pb-10"] p[class*="text-sm md:text-base lg:text-lg xl:text-xl"] {
+                font-size: 1.7rem !important; /* Increased from 1.5rem (24px) to 2rem (32px) for better readability on iPad */
+                line-height: 1.4 !important; /* Improved line height for better readability */
+                width: 640px !important; /* Increased width to match lg:w-[640px] for proper text wrapping */
+                max-width: 640px !important; /* Ensure max width is also set */
+                top: 55% !important; /* Position subtitle with more spacing from heading */
+                margin-bottom: 2rem !important; /* Added margin bottom for spacing before buttons */
+            }
+
+            /* Add vertical spacing between subtitle and buttons on iPad */
+            section[class*="pt-6 pb-10"] div[class*="top-75%"] {
+                top: 80% !important; /* Moved down from 55% to 58% to create better vertical spacing */
+                margin-top: 3rem !important; /* Added top margin for extra spacing */
+            }
+
+            /* Increase button sizes on iPad */
+            section[class*="pt-6 pb-10"] button[class*="w-[120px] md:w-[180px]"] {
+                width: 240px !important; /* Increased from 180px on medium screens to 240px on tablet */
+                height: 60px !important; /* Increased from 36px to 60px for better touch targets */
+                font-size: 1.125rem !important; /* Increased font size to lg (18px) */
+                padding: 0.75rem 2rem !important; /* Increased padding for better button appearance */
+            }
+
+            section[class*="pt-6 pb-10"] button[class*="w-[80px] md:w-[106px]"] {
+                width: 180px !important; /* Increased from 106px on medium screens to 180px on tablet */
+                height: 60px !important; /* Increased from 36px to 60px for better touch targets */
+                font-size: 1.125rem !important; /* Increased font size to lg (18px) */
+                padding: 0.75rem 2rem !important; /* Increased padding for better button appearance */
+            }
+
+            /* Increase gap between buttons on iPad */
+            section[class*="pt-6 pb-10"] div[class*="flex gap-8 md:gap-8"] {
+                gap: 1.5rem !important; /* Increased gap from 2rem to 1.5rem for tablet */
+            }
+
+
+        }
+
+        /* Responsive fixes - only apply to mobile (not tablets) */
+        @media screen and (max-width: 767px) {
+            /* Remove fixed widths that cause horizontal scroll */
+            body {
+                width: 100vw;
+                margin: 0;
+                padding: 0;
+            }
+
+            /* Ensure images and content fit viewport */
+            img, iframe, video, canvas, svg {
+                max-width: 100%;
+                height: auto;
+                box-sizing: border-box;
+            }
+
+            /* Prevent text overflow and ensure proper wrapping */
+            h1, h2, h3, h4, h5, h6, p, span, div {
+                max-width: 100%;
+                word-wrap: break-word;
+                overflow-wrap: break-word;
+            }
+            /* Disable automatic hyphenation for headings to prevent displaying dashes */
+            h1, h2, h3, h4, h5, h6 {
+                hyphens: none;
+            }
+
+            /* Dental Services Cards - Mobile Layout */
+            /* Left align all text within service cards */
+            #cosmetic-card h3,
+            #cosmetic-card p,
+            #root-canal-card h3,
+            #root-canal-card p,
+            #braces-card h3,
+            #braces-card p,
+            #implants-card h3,
+            #implants-card p,
+            #pediatric-card h3,
+            #pediatric-card p,
+            #smile-makeover-card h3,
+            #smile-makeover-card p {
+                text-align: left !important;
+            }
+
+            /* Increase font size of headings inside service cards on mobile */
+            #cosmetic-card h3,
+            #root-canal-card h3,
+            #braces-card h3,
+            #implants-card h3,
+            #pediatric-card h3,
+            #smile-makeover-card h3 {
+                font-size: 28px !important;
+            }
+
+            /* Increase font size of paragraph text inside service cards on mobile */
+            #cosmetic-card p,
+            #root-canal-card p,
+            #braces-card p,
+            #implants-card p,
+            #pediatric-card p,
+            #smile-makeover-card p {
+                font-size: 18px !important;
+                line-height: 1.4 !important;
+            }
+        }
+
+
+
+    /* Galaxy Z Fold Responsive Fixes - Folded (Tall & Narrow) */
+    /* Targets Galaxy Z Fold inner screen: ~720x1640 (aspect ratio ~0.439) */
+    @media screen and (max-height: 1800px) and (orientation: portrait) or screen and (max-width: 900px) and (max-height: 1200px) {
+            /* Hero Section Z Fold Folded Adjustments */
+            section[class*="pt-6 pb-10"] img[class*="rounded-"][class*="opacity-60"] {
+                height: 70vh !important; /* Shorter hero image for better proportion */
+                width: 100% !important; /* Reduce width to prevent cropping */
+                margin: 0 auto !important;
+            }
+
+            /* Hero Title - Optimized for Galaxy Z Fold folded */
+            section[class*="pt-6 pb-10"] h1 {
+                font-size: 0.9rem !important; /* Further reduced font size */
+                line-height: 1.3 !important;
+                top: 18% !important; /* Better positioning for folded screen */
+                text-align: center !important;
+                max-width: 95% !important; /* Increased width for better space utilization */
+                transform: translate(-50%, -50%) !important; /* Ensure proper centering */
+            }
+
+            /* Hero Subtitle */
+            section[class*="pt-6 pb-10"] p[class*="text-sm md:text-base"] {
+                font-size: 0.8rem !important;
+                top: 40% !important; /* Position midway */
+                max-width: 80% !important;
+                text-align: center !important;
+            }
+
+            /* Hero Buttons */
+            section[class*="pt-6 pb-10"] div[class*="top-75%"] {
+                top: 60% !important; /* Position below subtitle */
+                left: 50% !important;
+                transform: translateX(-50%) !important;
+                flex-direction: column !important; /* Stack buttons vertically */
+                gap: 0.5rem !important;
+            }
+
+            /* All Headings - Smaller for Z Fold Folded */
+            h1:not([class*="text-4xl"]):not([class*="4xl"]), h2, h3 {
+                font-size: 1.5rem !important;
+                line-height: 1.2 !important;
+            }
+
+            /* Service Section Headings */
+            section[class*="bg-black"] h2 {
+                font-size: 2rem !important; /* Smaller for folded Z Fold */
+                line-height: 1.2 !important;
+            }
+
+            /* Dr. Suruchi Section Heading */
+            h2[class*="text-4xl md:text-3xl"] {
+                font-size: 6rem !important;
+                line-height: 1.2 !important;
+            }
+
+            /* Smile Gallery Section Heading */
+            h2[class*="gallery-title"] {
+                font-size: 2.5rem !important;
+                margin-bottom: 0.5rem !important;
+            }
+
+            /* Patient Stories Section */
+            section[class*="py-32"] h2 {
+                font-size: 2.2rem !important;
+            }
+
+            /* Our Clinic Section */
+            section[class*="py-20"]:not([class*="bg-black"]) h2[class*="text-4xl"] {
+                font-size: 2.2rem !important;
+            }
+
+            /* Book Appointment Section */
+            section[class*="bg-black py-24"] h2 {
+                font-size: 2.5rem !important;
+            }
+
+            /* Footer Headings */
+            footer h3, footer h4 {
+                font-size: 1.2rem !important;
+            }
+        }
+
+        /* Galaxy Z Fold Responsive Fixes - Unfolded (Ultra Wide) */
+        @media screen and (min-width: 1600px) and (max-height: 1000px) and (aspect-ratio: 2.2 / 1) {
+            /* Hero Section Z Fold Unfolded Adjustments */
+            section[class*="pt-6 pb-10"] img[class*="rounded-"][class*="opacity-60"] {
+                height: 80vh !important; /* Taller hero for unfolded screen */
+                max-width: 1400px !important;
+                width: 80% !important; /* Better width utilization */
+            }
+
+            /* Hero Title */
+            section[class*="pt-6 pb-10"] h1 {
+                font-size: 5rem !important; /* Large but proportionate */
+                top: 25% !important;
+                line-height: 1.1 !important;
+            }
+
+            /* Hero Subtitle */
+            section[class*="pt-6 pb-10"] p[class*="text-sm md:text-base"] {
+                font-size: 1.5rem !important;
+                top: 55% !important;
+                max-width: 1000px !important;
+            }
+
+            /* Hero Buttons */
+            section[class*="pt-6 pb-10"] div[class*="top-75%"] {
+                top: 70% !important;
+                gap: 2rem !important; /* More spacing for wide screen */
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            /* All Headings - Proportionate scaling for ultra-wide */
+            h1, h2 {
+                font-size: 4rem !important;
+                line-height: 1.1 !important;
+                max-width: 80% !important; /* Prevent stretching too wide */
+            }
+
+            /* Service Section */
+            section[class*="bg-black"] h2 {
+                font-size: 5rem !important;
+                text-align: center !important;
+            }
+
+            /* Gallery Section */
+            .gallery-title {
+                font-size: 5.5rem !important;
+            }
+
+            /* Testimonials Section */
+            section[class*="py-32"] h2 {
+                font-size: 5rem !important;
+            }
+        }
+    </style>
+</head>
+<body style="overflow-x: hidden;">
+    <nav class="flex items-center justify-between px-6 md:px-10 w-full max-w-screen mx-auto h-[120px] overflow-hidden" style="background-color: #050806;">
+
+        <!-- Left side navigation buttons -->
+        <div class="flex items-center space-x-4 md:space-x-8">
+            <!-- Hamburger menu for mobile -->
+            <button id="mobile-menu-btn" class="ipad-hamburger text-white focus:outline-none focus:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+
+            <a href="#home" class="ipad-nav-links text-white hover:text-gray-300 transition-colors duration-200 text-sm md:text-base hidden md:block">Home</a>
+            <a href="#services" class="ipad-nav-links text-white hover:text-gray-300 transition-colors duration-200 text-sm md:text-base hidden md:block">Services</a>
+            <a href="#about" class="ipad-nav-links text-white hover:text-gray-300 transition-colors duration-200 text-sm md:text-base hidden md:block">About</a>
+        </div>
+
+    <!-- Logo positioned after left navigation -->
+    <div class="logo-container flex items-center">
+        <img src="images/logo.png" alt="Dr. Suruchi Dental Care Logo" class="h-10 md:h-20 w-auto object-cover cursor-pointer">
+    </div>
+
+        <!-- Right side menu button -->
+        <div class="flex items-center space-x-4">
+            <!-- Mobile Consult button -->
+            <!-- <button class="bg-[#BD8D89] text-white rounded-lg hover:bg-opacity-90 transition-all duration-200 md:hidden" style="width: 76px; height: 32px;">
+                Consult
+            </button> -->
+
+            <!-- Desktop menu button -->
+            <button class="ipad-book-btn bg-[#BD8D89] text-white rounded-lg hover:bg-opacity-90 transition-all duration-200 hidden md:block" style="width: 110px; height: 52px;">
+                Book Appointment
+            </button>
+        </div>
+
+        <!-- Mobile menu overlay -->
+        <div id="mobile-menu" class="fixed inset-0 bg-black bg-opacity-90 flex flex-col items-center justify-center z-50 md:hidden hidden">
+            <a href="#home" class="text-white hover:text-gray-300 transition-colors duration-200 text-lg py-4 mb-4" onclick="closeMobileMenu()">Home</a>
+            <a href="#services" class="text-white hover:text-gray-300 transition-colors duration-200 text-lg py-4 mb-4" onclick="closeMobileMenu()">Services</a>
+            <a href="#about" class="text-white hover:text-gray-300 transition-colors duration-200 text-lg py-4 mb-4" onclick="closeMobileMenu()">About</a>
+            <button class="bg-[#BD8D89] text-white rounded-lg hover:bg-opacity-90 transition-all duration-200 mt-4 px-6 py-2" onclick="closeMobileMenu()">Close Menu</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="w-full relative pt-6 pb-10 px-6 md:px-1 lg:px-0 xl:px-10 no-inner-scroll ipad-px-12" style="background-color: #050806;">
+        <img src="images/Heroimg.jpeg" alt="Hero Image" class="md:w-full md:max-w-[1250px] md:h-[100vh] w-[400px] h-[350px] object-cover mx-auto opacity-60 rounded-[20px] md:rounded-[30px] lg:rounded-[30px] xl:rounded-[50px] pt-0 pb-0 md:pt-5 md:pb-2 md:px-0">
+        <div>
+            <h1 class="absolute top-[25%] md:top-[38%] left-1/2 -translate-x-1/2 -translate-y-1/2 lg:translate-y-0 font-normal font-['Merienda',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] text-4xl md:text-3xl lg:text-6xl xl:text-7xl font-normal text-white text-center leading-[1.2] md:leading-[1.8] tracking-tight max-w-md md:max-w-full lg:max-w-2xl xl:max-w-3xl md:pb-8 md:mb-32 lg:mb-8 xl:mb-8">Smile with confidence</h1>
+            <p class="absolute top-[50%] md:top-[60%] lg:top-[75%] xl:top-[57%] left-1/2 -translate-x-1/2 -translate-y-1/2 font-['Nunito_Sans',_sans-serif] text-sm md:text-base lg:text-lg xl:text-xl text-white text-center w-[216px] md:w-[90px] lg:w-[640px] xl:w-[768px] leading-relaxed md:pb-12 lg:pb-20 xl:pb-24">Advanced, compassionate dental care tailored to your comfort and long-term oral health. Book your consultation today.</p>
+            <div class="absolute top-[75%] md:top-[75%] lg:top-[59%] xl:top-[62.5%] left-1/2 -translate-x-1/2 -translate-y-1/2 flex gap-4 md:gap-8">
+                <button class="w-[120px] md:w-[180px] h-9 md:h-9 px-3 md:px-6 py-1.5 md:py-2 font-['Nunito_Sans',_sans-serif] text-xs md:text-sm lg:text-base font-normal text-white bg-[#BD8D89] border-none rounded-lg hover:bg-opacity-90 transition-all duration-200 flex items-center justify-center">Book Appointment</button>
+                <button class="w-[80px] md:w-[106px] h-9 md:h-9 px-3 md:px-6 py-1.5 md:py-2 font-['Nunito_Sans',_sans-serif] text-xs md:text-sm lg:text-base font-normal text-white bg-white/10 backdrop-blur-sm rounded-lg hover:bg-white/20 transition-all duration-200 flex items-center justify-center cursor-pointer">Treatments</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dr. Suruchi Section -->
+    <section class="bg-white py-20">
+        <div class="max-w-6xl mx-auto px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 items-center">
+            <div class="order-2 lg:order-1">
+                <img src="images/dr suruchi.png" alt="Dr. Suruchi" class="w-full max-w-md mx-auto lg:mx-0 rounded-lg shadow-lg rounded-2xl md:rounded-3xl lg:rounded-2xl mt-8 pt-6 md:mt-0 md:pt-0" />
+            </div>
+                <div class="order-1 lg:order-2 text-center lg:text-left">
+                    <div>
+                        <h2 class="font- font-['Merienda',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] text-4xl md:text-3xl lg:text-6xl xl:text-6xl font-normal text-black text-left mb-6"
+                            style="border-bottom: none;">Dr. Suruchi Lahoti</h2>
+                        <p class="text-lg text-gray-700 mb-8 leading-relaxed max-w-3.5xl mx-auto text-left lg:mx-0 lg:text-left" style="font-family: 'Nunito Sans', sans-serif;">
+                            Dr. Suruchi Lahoti is a dental surgeon with 15 years of experience in restorative and cosmetic dentistry. Trained in basic and advanced implantology, she combines modern techniques with a patient-first approach to deliver comfortable, predictable results.
+                        </p>
+                        <div class="space-y-4 text-left lg:text-left">
+                            <div class="flex items-center justify-start lg:justify-start">
+                                <img src="images/certificate.png" alt="Certificate" class="w-5 h-5 mr-3" />
+                                <span class="text-gray-700" style="font-family: 'Nunito Sans', sans-serif;">Board certified</span>
+                            </div>
+                            <div class="flex items-center justify-start lg:justify-start">
+                                <img src="images/tranning.png" alt="Advanced Training" class="w-5 h-5 mr-3" />
+                                <span class="text-gray-700" style="font-family: 'Nunito Sans', sans-serif;">Advanced training</span>
+                            </div>
+                            <div class="flex items-center justify-start lg:justify-start">
+                                <img src="images/focused.png" alt="Patient Focused" class="w-5 h-5 mr-3" />
+                                <span class="text-gray-700" style="font-family: 'Nunito Sans', sans-serif;">Patient focused</span>
+                            </div>
+                        </div>
+                        <div class="mt-6 flex justify-start lg:justify-start space-x-4">
+                            <button class="learn-button">Learn</button>
+                            <button class="learn-button" style="background-color: transparent;">Contact > </button>
+                        </div>
+                        <!-- <hr class="mt-6 border-gray-200"> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- New Dental Solutions Section -->
+    <section class="w-full overflow-x-hidden no-inner-scroll" style="background-color: #050806;">
+        <div class="max-w-6xl mx-auto px-6 lg:px-8 py-20">
+            <h2 class="text-center text-3xl md:text-5xl lg:text-6xl font- font-['Merienda',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] text-white max-w-10xl mx-auto leading-tight"
+                style="border-bottom: none;">Comprehensive dental solutions for every smile</h2>
+            <p class="text-center text-base md:text-lg lg:text-xl text-white mt-4 font-['Nunito_Sans',_sans-serif]">Precision care tailored to your unique dental needs:</p>
+        </div>
+
+        <!-- Dental Services Cards - Horizontal Layout -->
+        <div class="services-cards flex flex-wrap justify-center px-4 md:px-8 lg:px-16 pb-20 gap-4 md:gap-8">
+            <!-- Cosmetic Dentistry Card and Root Canal Card Column -->
+            <div class="flex flex-col gap-8">
+                <!-- Cosmetic Dentistry Card -->
+<div id="cosmetic-card" class="flex flex-col justify-between w-full max-w-xs md:max-w-sm lg:w-[405.33px] h-[400px] md:h-[488px] rounded-[20px] shadow-xl p-[20px] md:p-[40px]" style="background-color: #474244;">
+                    <div class="cosmetic-content">
+                        <div class="text-gray-300 mb-3 md:mb-4 uppercase tracking-[0.05em] font-medium text-[12px] md:text-[14px]" style="font-family: 'Nunito Sans', sans-serif; padding-top: 120px;">
+                            
+                        </div>
+                        <h3 class="text-white mb-4 leadin-g-tight font-semibold text-[33px]" style="font-family: 'Merienda', 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.1;">
+                            Cosmetic dentistry
+                        </h3>
+                        <p class="text-gray-200 mb-6 leading-relaxed font-normal text-[16px]" style="font-family: 'Nunito Sans', sans-serif;">
+                            Transform your smile with advanced aesthetic techniques
+                        </p>
+
+                    </div>
+                </div>
+
+                <!-- Root Canal Card -->
+                <div id="root-canal-card" class="flex flex-col justify-between w-full max-w-xs md:max-w-sm lg:w-[405.33px] h-[361px] rounded-[20px] shadow-xl p-[40px]" style="background-color: #474244;">
+                    <div class="root-canal-content">
+                        <div class="flex justify-start mb-[20px] pt-10">
+                            <img src="images/rootcanal.png" alt="Root Canal Icon" class="w-[48px] h-[48px] object-contain" />
+                        </div>
+                        <h3 class="text-white mb-2 leading-tight font-semibold text-[33px]" style="font-family: 'Merienda', 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.1;">
+                            Root canal
+                        </h3>
+                        <p class="text-gray-200 mb-[25px] leading-relaxed font-normal text-[16px]" style="font-family: 'Nunito Sans', sans-serif;">
+                            Precise and painless root canal treatments
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Braces Card and Implants Card Column -->
+            <div class="flex flex-col gap-8">
+                <!-- Braces Card -->
+                <div id="braces-card" class="flex justify-between items-center w-full max-w-xs md:max-w-sm lg:w-[405.33px] h-[291px] rounded-[20px] shadow-xl p-[32px] relative overflow-hidden" style="background-color: #474244;">
+                    <div class="braces-content flex-1 relative z-10">
+                        <div class="flex justify-start mb-6">
+                            <img src="images/braces.png" alt="Braces Icon" class="w-[48px] h-[48px] object-contain" />
+                        </div>
+                        <h3 class="text-white mb-3 leading-tight font-semibold text-[33px]" style="font-family: 'Merienda', 'Helvetica Neue', Helvetica, Arial, sans-serif;">
+                            Braces
+                        </h3>
+                        <p class="text-gray-200 mb-4 leading-relaxed font-normal text-[16px]" style="font-family: 'Nunito Sans', sans-serif;">
+                            Modern alignment solutions for perfect teeth
+                        </p>
+                        <div class="braces-link-container relative z-10 mb-4">
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Implants Card -->
+                <div id="implants-card" class="flex flex-col justify-between w-full max-w-xs md:max-w-sm lg:w-[405.33px] h-[558px] rounded-[20px] shadow-xl relative" style="background-color: #474244;">
+                    <!-- Implants image -->
+                    <div class="w-full">
+                        <img src="images/impants.png" alt="Implants Icon" class="w-full h-[233px] object-cover rounded-t-[16px]" />
+                    </div>
+
+                    <div class="flex-1 flex flex-col justify-center text-left px-10">
+                        <!-- <div class="text-gray-300 mb-3 uppercase tracking-[0.05em] font-medium text-[14px]" style="font-family: 'Nunito Sans', sans-serif; margin-top: 16px;">
+                            Implants
+                        </div> -->
+                        <h3 class="text-white mb-4 leading-tight font-semibold text-[33px]" style="font-family: 'Merienda', 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.2;">
+                            Dental implants for permanent, natural-looking solutions
+                        </h3>
+                        <p class="text-gray-200 mb-2 text-[16px] font-medium" style="font-family: 'Nunito Sans', sans-serif; margin-bottom: 15px;">
+                            Restore your smile
+                        </p>
+                    </div>
+
+
+                </div>
+            </div>
+
+            <!-- Pediatric Card and Smile Makeover Card Column -->
+            <div class="flex flex-col gap-8">
+                <!-- Pediatric Card -->
+                <div id="pediatric-card" class="flex flex-col w-full max-w-xs md:max-w-sm lg:w-[405.33px] h-[558px] rounded-[20px] shadow-xl relative" style="background-color: #474244;">
+                    <!-- Child image covering full width -->
+                    <div class="w-full">
+                        <img src="images/child.png" alt="Child Icon" class="w-full h-[233px] object-cover rounded-t-[16px]" />
+                    </div>
+
+                    <div class="flex-1 flex flex-col justify-center px-10">
+                        <div class="text-left pt-8">
+                            <!-- <div class="text-white mb-3 uppercase tracking-[0.15em] font-medium text-[14px]" style="font-family: 'Nunito Sans', sans-serif;">
+                              
+                            </div> -->
+                            <h3 class="text-white mb-4 leading-tight font-bold text-[33px]" style="font-family: 'Merienda', 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.2;">
+                                Gentle dental care for children and teens
+                            </h3>
+                            <p class="text-white text-[14px] font-medium" style="font-family: 'Nunito Sans', sans-serif; margin-bottom: 15px;">
+                                Family friendly
+                            </p>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <!-- Smile Makeover Card -->
+<div id="smile-makeover-card" class="flex justify-between items-center w-full max-w-xs md:max-w-sm lg:w-[405.33px] h-[291px] rounded-[20px] shadow-xl p-[32px] relative overflow-hidden" style="background-color: #474244;">
+
+                    <div class="smile-makeover-content flex-1 relative z-10 pr-12 md:space-y-0" style="margin-top: 32px;">
+                        <div class="flex justify-start mb-3 md:mb-6" style="margin-bottom: 24px;">
+                            <img src="images/smile.png" alt="Smile Icon" class="w-[48px] h-[48px] object-contain" />
+                        </div>
+                        <h3 class="text-white mb-2 md:mb-4 leading-tight font-bold text-[30px]" style="font-family: 'Merienda', 'Helvetica Neue', Helvetica, Arial, sans-serif;">
+                            Smile makeover
+                        </h3>
+                        <p class="text-gray-200 mb-3 md:mb-6 leading-relaxed font-normal text-[14px]" style="font-family: 'Nunito Sans', sans-serif; margin-bottom: 1rem;">
+                            Complete smile transformation with personalized treatment
+                        </p>
+                        <div class="mb-10" style="margin-top: 0.5rem;"></div>
+                    </div>
+                    <div class="smile-makeover-link-container relative z-10">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+    </section>
+
+
+
+    <!-- Smile Gallery Section -->
+    <section class="bg-white py-20 px-6 lg:px-4 md:py-12 md:px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+                <!-- Left Side - Text Content -->
+                <div class="space-y-8 lg:pr-20 pb-1 md:text-center lg:text-left">
+                    <div class="space-y-6 gallery-text-container">
+                        <h2 class="gallery-title font-normal font-['Merienda',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] text-4xl md:text-3xl lg:text-6xl xl:text-7xl font-normal text-black text-center mb-3 leading-tight pb-1">
+                            Smile gallery
+                        </h2>
+                        <p class="gallery-description text-lg lg:text-xl md:text-xl text-gray-600 leading-relaxed max-w-lg font-['Nunito_Sans',_sans-serif] pb-5 lg:pb-55 xl:pb-20">
+                            Witness the transformative power of our dental expertise
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Right Side - Carousel (Tailwind Only) -->
+                <div class="relative w-full max-w-[560px] mx-auto carousel-container">
+                    <!-- Main Carousel Container -->
+                    <div class="relative overflow-hidden rounded-2xl w-full max-w-[365px] aspect-square mx-auto md:w-[365px] md:h-[400px] lg:w-[560px] lg:h-[560px]">
+                        <!-- Carousel Slides -->
+                        <div id="carousel-slides" class="flex h-full transition-transform duration-500 ease-in-out">
+                            <!-- Slide 1 - Smile Transformation -->
+                            <div class="carousel-slide flex-shrink-0 w-[80%] mr-8 h-full relative rounded-2xl overflow-hidden">
+                                <img src="images/smile 2.jpeg" alt="Before and after smile transformation showing dramatic improvement in dental aesthetics" class="w-full h-full object-cover shadow-2xl">
+                            </div>
+
+                            <!-- Slide 2 - Dentist with Patient -->
+                            <div class="flex-shrink-0 w-[80%] mr-8 h-full relative rounded-2xl overflow-hidden ">
+                                <img src="images/smile 1.jpeg" alt="Dr. Suruchi Lahoti providing compassionate dental care to a patient" class="w-full h-full object-cover shadow-2xl">
+                                <div class="absolute inset-0 bg-black/10"></div>
+                            </div>
+
+                            <!-- Slide 3 - Orthodontic Treatment -->
+                            <div class="flex-shrink-0 w-[80%] mr-8 h-full relative rounded-2xl overflow-hidden ">
+                                <img src="images/smile 3.jpeg" alt="Modern orthodontic braces for perfect teeth alignment" class="w-full h-full object-cover shadow-2xl">
+                            </div>
+
+                            <!-- Slide 4 - Pediatric Dentistry -->
+                            <div class="flex-shrink-0 w-[80%] mr-8 h-full relative rounded-2xl overflow-hidden">
+                                <img src="images/smile 4.jpeg" alt="Gentle pediatric dental care for children and teens" class="w-full h-full object-cover shadow-2xl">
+                            </div>
+
+                            <!-- Slide 5 - Dental Implants -->
+                            <div class="flex-shrink-0 w-full h-full relative rounded-2xl overflow-hidden ">
+                                <img src="images/smile 5.jpeg" alt="Advanced dental implant solutions for permanent natural-looking results" class="w-full h-full object-cover shadow-2xl">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Navigation Controls -->
+                    <div class="flex items-center justify-between mt-6">
+                        <!-- Arrow Buttons -->
+                        <div class="flex items-center gap-2">
+                            <button id="prev-slide" class="bg-white hover:bg-gray-50 rounded-full p-3 shadow-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-rose-300 focus:ring-opacity-50" aria-label="Previous slide">
+                                <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                                </svg>
+                            </button>
+
+                            <button id="next-slide" class="bg-white hover:bg-gray-50 rounded-full p-3 shadow-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-rose-300 focus:ring-opacity-50" aria-label="Next slide">
+                                <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </button>
+                        </div>
+
+                        <!-- Pagination Dots -->
+                        <div class="flex gap-2">
+                            <button class="carousel-dot w-3 h-3 rounded-full bg-rose-400 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-rose-300 focus:ring-opacity-50" data-slide="0" aria-label="Go to slide 1"></button>
+                            <button class="carousel-dot w-3 h-3 rounded-full bg-gray-300 hover:bg-gray-400 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-rose-300 focus:ring-opacity-50" data-slide="1" aria-label="Go to slide 2"></button>
+                            <button class="carousel-dot w-3 h-3 rounded-full bg-gray-300 hover:bg-gray-400 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-rose-300 focus:ring-opacity-50" data-slide="2" aria-label="Go to slide 3"></button>
+                            <button class="carousel-dot w-3 h-3 rounded-full bg-gray-300 hover:bg-gray-400 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-rose-300 focus:ring-opacity-50" data-slide="3" aria-label="Go to slide 4"></button>
+                            <button class="carousel-dot w-3 h-3 rounded-full bg-gray-300 hover:bg-gray-400 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-rose-300 focus:ring-opacity-50" data-slide="4" aria-label="Go to slide 5"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <script>
+        // Initialize all functionality when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu functionality
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            function toggleMobileMenu() {
+                mobileMenu.classList.toggle('hidden');
+                // Prevent body scroll when menu is open
+                document.body.style.overflow = mobileMenu.classList.contains('hidden') ? 'auto' : 'hidden';
+            }
+
+            function closeMobileMenu() {
+                mobileMenu.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }
+
+            // Force hamburger visibility for debugging
+            const forceHamburgerVisible = () => {
+                const hamburgerBtn = document.getElementById('mobile-menu-btn');
+                if (hamburgerBtn) {
+                    hamburgerBtn.style.display = 'block !important';
+                    hamburgerBtn.style.visibility = 'visible !important';
+                    hamburgerBtn.style.opacity = '1 !important';
+                    hamburgerBtn.style.position = 'relative !important';
+                    hamburgerBtn.style.zIndex = '10 !important';
+                    console.log('Hamburger forced visible:', hamburgerBtn.offsetWidth + ':' + hamburgerBtn.offsetHeight);
+                }
+            };
+
+            // Force visibility immediately and on resize
+            forceHamburgerVisible();
+            window.addEventListener('resize', forceHamburgerVisible);
+
+            // Event listeners
+            if (mobileMenuBtn) mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+
+            // Close menu when clicking outside (on the overlay itself)
+            if (mobileMenu) mobileMenu.addEventListener('click', function(e) {
+                if (e.target === mobileMenu) {
+                    closeMobileMenu();
+                }
+            });
+
+            // Close menu on window resize if screen becomes larger than mobile
+            window.addEventListener('resize', function() {
+                if (window.innerWidth >= 768 && mobileMenu && !mobileMenu.classList.contains('hidden')) {
+                    closeMobileMenu();
+                }
+            });
+
+            // Smile Gallery Carousel functionality (Simplified)
+            let currentSlide = 0;
+            const totalSlides = 5;
+            const slides = document.getElementById('carousel-slides');
+            const dots = document.querySelectorAll('.carousel-dot');
+            const prevBtn = document.getElementById('prev-slide');
+            const nextBtn = document.getElementById('next-slide');
+
+            function updateCarousel() {
+                // Calculate slide width including margin for peeking effect
+                const slideElements = document.querySelectorAll("#carousel-slides > div");
+                const slideWidth = slideElements[0].offsetWidth + parseInt(getComputedStyle(slideElements[0]).marginRight);
+                slides.style.transform = `translateX(-${currentSlide * slideWidth}px)`;
+
+                // Update dots
+                dots.forEach((dot, index) => {
+                    if (index === currentSlide) {
+                        dot.classList.remove('bg-gray-300', 'hover:bg-gray-400');
+                        dot.classList.add('bg-rose-400');
+                    } else {
+                        dot.classList.remove('bg-rose-400');
+                        dot.classList.add('bg-gray-300', 'hover:bg-gray-400');
+                    }
+                });
+            }
+
+            function nextSlide() {
+                currentSlide = (currentSlide + 1) % totalSlides;
+                updateCarousel();
+            }
+
+            function prevSlide() {
+                currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+                updateCarousel();
+            }
+
+            function goToSlide(slideIndex) {
+                currentSlide = slideIndex;
+                updateCarousel();
+            }
+
+            // Event listeners for navigation
+            if (nextBtn) nextBtn.addEventListener('click', nextSlide);
+            if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+
+            // Event listeners for dots
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => goToSlide(index));
+            });
+
+            // Keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft') {
+                    prevSlide();
+                } else if (e.key === 'ArrowRight') {
+                    nextSlide();
+                }
+            });
+
+            // Initialize carousel
+            updateCarousel();
+
+            // Our Clinic Carousel functionality
+            let clinicCurrentSlide = 0;
+            const clinicTotalSlides = 5;
+            const clinicSlides = document.getElementById('clinic-carousel-slides');
+            const clinicDots = document.querySelectorAll('.clinic-carousel-dot');
+            const clinicPrevBtn = document.getElementById('clinic-prev-slide');
+            const clinicNextBtn = document.getElementById('clinic-next-slide');
+
+            function updateClinicCarousel() {
+                // Calculate slide width including margin for peeking effect
+                const clinicSlideElements = document.querySelectorAll("#clinic-carousel-slides > div");
+                const clinicSlideWidth = clinicSlideElements[0].offsetWidth + parseInt(getComputedStyle(clinicSlideElements[0]).marginRight);
+                clinicSlides.style.transform = `translateX(-${clinicCurrentSlide * clinicSlideWidth}px)`;
+
+                // Update dots
+                clinicDots.forEach((dot, index) => {
+                    if (index === clinicCurrentSlide) {
+                        dot.classList.remove('bg-gray-300', 'hover:bg-gray-400');
+                        dot.classList.add('bg-rose-400');
+                    } else {
+                        dot.classList.remove('bg-rose-400');
+                        dot.classList.add('bg-gray-300', 'hover:bg-gray-400');
+                    }
+                });
+            }
+
+            function nextClinicSlide() {
+                clinicCurrentSlide = (clinicCurrentSlide + 1) % clinicTotalSlides;
+                updateClinicCarousel();
+            }
+
+            function prevClinicSlide() {
+                clinicCurrentSlide = (clinicCurrentSlide - 1 + clinicTotalSlides) % clinicTotalSlides;
+                updateClinicCarousel();
+            }
+
+            function goToClinicSlide(slideIndex) {
+                clinicCurrentSlide = slideIndex;
+                updateClinicCarousel();
+            }
+
+            // Event listeners for clinic navigation
+            if (clinicNextBtn) clinicNextBtn.addEventListener('click', nextClinicSlide);
+            if (clinicPrevBtn) clinicPrevBtn.addEventListener('click', prevClinicSlide);
+
+            // Event listeners for clinic dots
+            clinicDots.forEach((dot, index) => {
+                dot.addEventListener('click', () => goToClinicSlide(index));
+            });
+
+            // Initialize clinic carousel
+            updateClinicCarousel();
+        });
+
+    </script>
+
+    <!-- Testimonials Section -->
+    <section class="py-32 px-6 lg:px-8" style="background-color: #BD8D89;">
+        <div class="max-w-7xl mx-auto text-center">
+            <!-- Section Header -->
+            <div class="mb-16">
+            <h2 class="font-normal font-['Merienda',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] text-4xl lg:text-6xl font-normal text-black mb-6 leading-tight">
+                Patient stories
+            </h2>
+            <p class="text-xl text-black max-w-2xl mx-auto" style="font-family: 'Nunito Sans', sans-serif;">
+                Real experiences from our valued patients
+            </p>
+            </div>
+
+            <!-- Testimonials Grid -->
+            <div class="testimonials-grid grid md:grid-cols-3 gap-8 lg:gap-12">
+                <!-- Testimonial 1 -->
+                <div class="bg-white/95 backdrop-blur-sm rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+                    <!-- Rating Stars -->
+                    <div class="flex justify-start mb-6">
+                        <div class="flex space-x-1">
+                            <svg class="w-5 h-5 text-gray-900" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                            </svg>
+                            <svg class="w-5 h-5 text-gray-900" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                            </svg>
+                            <svg class="w-5 h-5 text-gray-900" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                            </svg>
+                            <svg class="w-5 h-5 text-gray-900" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                            </svg>
+                            <svg class="w-5 h-5 text-gray-900" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Review Text -->
+                    <p class="text-gray-700 mb-8 leading-relaxed text-left" style="font-family: 'Nunito Sans', sans-serif;">
+                        "Dr. Lahoti transformed my dental experience. Her gentle approach and expertise made what could have been stressful treatments completely comfortable. My smile has never looked better!"
+                    </p>
+
+                    <!-- Patient Info -->
+                    <div class="flex items-start md:items-center md:flex-col md:gap-2 md:justify-start">
+                        <div class="w-12 h-12 bg-[#BD8D89] rounded-full flex items-center justify-center mr-4 md:mr-0">
+                            <span class="text-white font-bold text-lg">SR</span>
+                        </div>
+                        <div class="text-left">
+                            <p class="font-bold text-gray-900 font-['Nunito_Sans',_sans-serif]">Sarah Rodriguez</p>
+                            <p class="text-sm text-gray-600 font-['Nunito_Sans',_sans-serif]">Cosmetic Dentistry Patient</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="bg-white/95 backdrop-blur-sm rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+                    <!-- Rating Stars -->
+                    <div class="flex justify-start mb-6">
+                        <div class="flex space-x-1">
+                            <svg class="w-5 h-5 text-gray-900" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                            </svg>
+                            <svg class="w-5 h-5 text-gray-900" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                            </svg>
+                            <svg class="w-5 h-5 text-gray-900" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                            </svg>
+                            <svg class="w-5 h-5 text-gray-900" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                            </svg>
+                            <svg class="w-5 h-5 text-gray-900" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Review Text -->
+                    <p class="text-gray-700 mb-8 leading-relaxed text-left" style="font-family: 'Nunito Sans', sans-serif;">
+                        "From my first visit to my implant procedure, Dr. Lahoti and her team provided exceptional care. The results exceeded my expectations and I couldn't be happier with my new smile."
+                    </p>
+
+                    <!-- Patient Info -->
+                    <div class="flex items-start md:items-center md:flex-col md:gap-2 md:justify-start">
+                        <div class="w-12 h-12 bg-[#050606] rounded-full flex items-center justify-center mr-4 md:mr-0">
+                            <span class="text-white font-bold text-lg">MJ</span>
+                        </div>
+                        <div class="text-left">
+                            <p class="font-bold text-gray-900 font-['Nunito_Sans',_sans-serif]">Michael Johnson</p>
+                            <p class="text-sm text-gray-600 font-['Nunito_Sans',_sans-serif]">Dental Implant Patient</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="bg-white/95 backdrop-blur-sm rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+                    <!-- Rating Stars -->
+                    <div class="flex justify-start mb-6">
+                        <div class="flex space-x-1">
+                            <svg class="w-5 h-5 text-gray-900" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                            </svg>
+                            <svg class="w-5 h-5 text-gray-900" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                            </svg>
+                            <svg class="w-5 h-5 text-gray-900" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                            </svg>
+                            <svg class="w-5 h-5 text-gray-900" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                            </svg>
+                            <svg class="w-5 h-5 text-gray-900" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Review Text -->
+                    <p class="text-gray-700 mb-8 leading-relaxed text-left" style="font-family: 'Nunito Sans', sans-serif;">
+                        "Bringing my children to Dr. Lahoti's office has been wonderful. She has a special way with kids and creates a comfortable, fun environment. Both my children look forward to their check-ups!"
+                    </p>
+
+                    <!-- Patient Info -->
+                    <div class="flex items-start md:items-center md:flex-col md:gap-2 md:justify-start">
+                        <div class="w-12 h-12 bg-[#474244] rounded-full flex items-center justify-center mr-4 md:mr-0">
+                            <span class="text-white font-bold text-lg">AP</span>
+                        </div>
+                        <div class="text-left">
+                            <p class="font-bold text-gray-900 font-['Nunito_Sans',_sans-serif]">Amanda Patel</p>
+                            <p class="text-sm text-gray-600 font-['Nunito_Sans',_sans-serif]">Pediatric Dental Parent</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Clinic Section -->
+    <section class="bg-white py-20">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+                <!-- Left Side - Text Content -->
+                <div class="space-y-8">
+                    <div class="space-y-6">
+                        <h2 class="font-normal font-['Merienda',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] text-4xl md:text-3xl lg:text-6xl xl:text-7xl font-normal text-black leading-tight">
+                            Our clinic
+                        </h2>
+                        <p class="text-lg lg:text-xl text-gray-600 leading-relaxed max-w-lg font-['Nunito_Sans',_sans-serif] text-left">
+                            Modern facilities designed for patient comfort and advanced dental care
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Right Side - Clinic Carousel -->
+                <div class="relative w-full max-w-[560px] mx-auto">
+                    <!-- Main Carousel Container -->
+                    <div class="relative overflow-hidden rounded-2xl w-full max-w-[365px] aspect-square mx-auto md:w-[365px] md:h-[400px] lg:w-[560px] lg:h-[560px]">
+                        <!-- Carousel Slides -->
+                        <div id="clinic-carousel-slides" class="flex h-full transition-transform duration-500 ease-in-out">
+                            <!-- Slide 1 -->
+                            <div class="flex-shrink-0 w-[80%] mr-8 h-full relative rounded-2xl overflow-hidden ">
+                                <img src="images/smile 1.jpeg" alt="Modern dental clinic interior showcasing patient comfort and advanced equipment" class="w-full h-full object-cover shadow-2xl">
+                            </div>
+
+                            <!-- Slide 2 -->
+                            <div class="flex-shrink-0 w-[80%] mr-8 h-full relative rounded-2xl overflow-hidden ">
+                                <img src="images/smile 2.jpeg" alt="State-of-the-art dental care facilities designed for optimal patient experience" class="w-full h-full object-cover shadow-2xl">
+                            </div>
+
+                            <!-- Slide 3 -->
+                            <div class="flex-shrink-0 w-[80%] mr-8 h-full relative rounded-2xl overflow-hidden ">
+                                <img src="images/smile 3.jpeg" alt="Comfortable dental clinic environment with modern equipment" class="w-full h-full object-cover shadow-2xl">
+                            </div>
+
+                            <!-- Slide 4 -->
+                            <div class="flex-shrink-0 w-[80%] mr-8 h-full relative rounded-2xl overflow-hidden ">
+                                <img src="images/smile 4.jpeg" alt="Advanced dental technology and patient-centered care facilities" class="w-full h-full object-cover shadow-2xl">
+                            </div>
+
+                            <!-- Slide 5 -->
+                            <div class="flex-shrink-0 w-full h-full relative rounded-2xl overflow-hidden ">
+                                <img src="images/smile 5.jpeg" alt="Contemporary dental clinic designed for comfort and innovation" class="w-full h-full object-cover shadow-2xl">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Navigation Controls - Bottom Left Arrows, Bottom Right Dots -->
+                    <div class="flex items-center justify-between mt-6">
+                        <!-- Arrow Buttons - Bottom Left -->
+                        <div class="flex items-center gap-2">
+                            <button id="clinic-prev-slide" class="bg-white hover:bg-gray-50 rounded-full p-3 shadow-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-rose-300 focus:ring-opacity-50" aria-label="Previous clinic slide">
+                                <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                                </svg>
+                            </button>
+
+                            <button id="clinic-next-slide" class="bg-white hover:bg-gray-50 rounded-full p-3 shadow-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-rose-300 focus:ring-opacity-50" aria-label="Next clinic slide">
+                                <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </button>
+                        </div>
+
+                        <!-- Pagination Dots - Bottom Right -->
+                        <div class="flex gap-2">
+                            <button class="clinic-carousel-dot w-3 h-3 rounded-full bg-rose-400 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-rose-300 focus:ring-opacity-50" data-slide="0" aria-label="Go to clinic slide 1"></button>
+                            <button class="clinic-carousel-dot w-3 h-3 rounded-full bg-gray-300 hover:bg-gray-400 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-rose-300 focus:ring-opacity-50" data-slide="1" aria-label="Go to clinic slide 2"></button>
+                            <button class="clinic-carousel-dot w-3 h-3 rounded-full bg-gray-300 hover:bg-gray-400 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-rose-300 focus:ring-opacity-50" data-slide="2" aria-label="Go to clinic slide 3"></button>
+                            <button class="clinic-carousel-dot w-3 h-3 rounded-full bg-gray-300 hover:bg-gray-400 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-rose-300 focus:ring-opacity-50" data-slide="3" aria-label="Go to clinic slide 4"></button>
+                            <button class="clinic-carousel-dot w-3 h-3 rounded-full bg-gray-300 hover:bg-gray-400 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-rose-300 focus:ring-opacity-50" data-slide="4" aria-label="Go to clinic slide 5"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Book Appointment Section -->
+    <section class="bg-black py-24 px-6">
+        <div class="max-w-4xl mx-auto text-center">
+            <!-- Section Title -->
+            <h2 class="text-3xl lg:text-6xl font-normal font-['Merienda',_'Helvetica_Neue',_Helvetica,_Arial,_sans-serif] font-normal text-white mb-4 leading-tight">
+                Book your appointment today
+            </h2>
+            <p class="text-lg lg:text-xl text-gray-300 mb-16 leading-relaxed max-w-2xl mx-auto" style="font-family: 'Nunito Sans', sans-serif;">
+                Take the first step towards a healthier, more confident smile with our expert dental team
+            </p>
+
+            <!-- Action Tabs -->
+            <div class="flex flex-wrap justify-center items-center gap-2 md:gap-4 mb-12">
+                <button class="appointment-tab schedule-tab px-4 md:px-6 lg:px-8 py-2 md:py-2.5 lg:py-3 text-xs md:text-sm lg:text-base bg-[#BD8D89] text-white font-semibold rounded-full shadow-lg hover:bg-[#A67D7A] transition-all duration-300 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#BD8D89] focus:ring-opacity-50" style="font-family: 'Nunito Sans', sans-serif;">
+                    Schedule
+                </button>
+                <button class="appointment-tab contact-tab px-4 md:px-6 lg:px-8 py-2 md:py-2.5 lg:py-3 text-xs md:text-sm lg:text-base bg-transparent text-white font-semibold rounded-full border-2 border-gray-500 hover:border-white transition-all duration-300 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50" style="font-family: 'Nunito Sans', sans-serif;">
+                    Contact
+                </button>
+            </div>
+
+            <!-- Image Block -->
+            <div class="w-full">
+                <img src="images/book appoinmnet .png" alt="Book Your Dental Appointment Today" class="w-full max-w-full h-auto rounded-2xl shadow-2xl object-cover">
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="bg-black py-16 px-6 lg:px-8" style="background-color: #0A0B09;">
+        <div class="max-w-7xl mx-auto">
+            <!-- Main Footer Content -->
+            <div class="space-y-12 mb-8">
+                <!-- Stay Connected -->
+                <div class="space-y-4 text-left md:text-left">
+                    <h3 class="text-2xl lg:text-3xl font-bold text-white text-left md:text-left" style="font-family: 'Nueva Std Condensed Bold', 'Nueva Std', Arial, sans-serif;">Stay connected</h3>
+                    <p class="text-gray-300 text-sm leading-relaxed text-left md:text-left" style="font-family: 'Nunito Sans', sans-serif;">Get the latest dental health tips and clinic updates</p>
+                </div>
+
+                <!-- Quick Links and Treatments -->
+                <div class="flex flex-col md:flex-row md:justify-end gap-12 lg:gap-16">
+                    <!-- Quick Links -->
+                    <div class="space-y-6 text-right md:text-right">
+                        <h4 class="text-sm font-bold text-white uppercase tracking-wide text-left md:text-left" style="font-family: 'Nunito Sans', sans-serif;">Quick links</h4>
+                        <ul class="space-y-3 text-left md:text-left">
+                            <li><a href="#home" class="text-gray-300 hover:text-white transition-colors duration-200 hover:underline text-sm text-left md:text-left" style="font-family: 'Nunito Sans', sans-serif;">Home</a></li>
+                            <li><a href="#services" class="text-gray-300 hover:text-white transition-colors duration-200 hover:underline text-sm text-left md:text-left" style="font-family: 'Nunito Sans', sans-serif;">Services</a></li>
+                            <li><a href="#about" class="text-gray-300 hover:text-white transition-colors duration-200 hover:underline text-sm text-left md:text-left" style="font-family: 'Nunito Sans', sans-serif;">About</a></li>
+                            <li><a href="#gallery" class="text-gray-300 hover:text-white transition-colors duration-200 hover:underline text-sm text-left md:text-left" style="font-family: 'Nunito Sans', sans-serif;">Gallery</a></li>
+                            <li><a href="#contact" class="text-gray-300 hover:text-white transition-colors duration-200 hover:underline text-sm text-left md:text-left" style="font-family: 'Nunito Sans', sans-serif;">Contact</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Treatments -->
+                    <div class="space-y-6 text-right md:text-right">
+                        <h4 class="text-sm font-bold text-white uppercase tracking-wide text-left md:text-left" style="font-family: 'Nunito Sans', sans-serif;">Treatments</h4>
+                        <ul class="space-y-3 text-left md:text-left">
+                            <li><a href="#" class="text-gray-300 hover:text-white transition-colors duration-200 hover:underline text-sm text-left md:text-left" style="font-family: 'Nunito Sans', sans-serif;">Cosmetic</a></li>
+                            <li><a href="#" class="text-gray-300 hover:text-white transition-colors duration-200 hover:underline text-sm text-left md:text-left" style="font-family: 'Nunito Sans', sans-serif;">Implants</a></li>
+                            <li><a href="#" class="text-gray-300 hover:text-white transition-colors duration-200 hover:underline text-sm text-left md:text-left" style="font-family: 'Nunito Sans', sans-serif;">Whitening</a></li>
+                            <li><a href="#" class="text-gray-300 hover:text-white transition-colors duration-200 hover:underline text-sm text-left md:text-left" style="font-family: 'Nunito Sans', sans-serif;">Braces</a></li>
+                            <li><a href="#" class="text-gray-300 hover:text-white transition-colors duration-200 hover:underline text-sm text-left md:text-left" style="font-family: 'Nunito Sans', sans-serif;">Root canal</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Divider Line -->
+            <hr class="border-gray-700 mb-8">
+
+            <!-- Bottom Bar -->
+            <div class="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
+
+                <!-- Copyright -->
+                <div class="flex items-center justify-center">
+                    <p class="text-gray-400 text-sm flex items-center mr-2" style="font-family: 'Nunito Sans', sans-serif;">© 2025 All rights reserved.</p>
+                    <a href="https://www.nex2link.com/" target="_blank" class="inline-block hover:opacity-80 transition-opacity duration-200">
+                        <img src="images/n2l logo.png" alt="N2L Logo" class="h-8 w-auto cursor-pointer" />
+                    </a>
+                </div>
+
+                <!-- Bottom Links -->
+                <div class="flex items-center space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors duration-200 hover:underline text-sm" style="font-family: 'Nunito Sans', sans-serif;">Privacy</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors duration-200 hover:underline text-sm" style="font-family: 'Nunito Sans', sans-serif;">Terms of service</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors duration-200 hover:underline text-sm" style="font-family: 'Nunito Sans', sans-serif;">Cookies</a>
+                </div>
+
+                <!-- Social Media Icons -->
+                <div class="flex items-center space-x-4">
+                    <a href="#" class="text-white hover:text-gray-300 transition-colors duration-200 hover:scale-110" aria-label="Facebook">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="text-white hover:text-gray-300 transition-colors duration-200 hover:scale-110" aria-label="Instagram">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.174-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.753.099.12.112.225.083.349-.091.375-.293 1.199-.334 1.363-.053.225-.172.271-.402.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.357-.629-2.746-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24.009 12.017 24.009c6.624 0 11.99-5.367 11.99-11.988C24.007 5.367 18.641.001 12.017.001z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="text-white hover:text-gray-300 transition-colors duration-200 hover:scale-110" aria-label="LinkedIn">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
